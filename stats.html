@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hant">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BOX BOX Statistics</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<header>
+
+<h1>📊 Statistics</h1>
+
+<p>Season Data</p>
+
+</header>
+
+
+
+<div class="card">
+
+<h2>💰 Total Earnings</h2>
+
+<p class="money" id="totalMoney">
+
+HK$0
+
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>⏱ Total Work Hours</h2>
+
+<p id="totalHours">
+
+0 小時
+
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>🏎️ Sessions</h2>
+
+<p id="totalSessions">
+
+0 次
+
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>🔥 Overtime</h2>
+
+<p id="totalOvertime">
+
+0 小時
+
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>📅 Recent Races</h2>
+
+<div id="records">
+
+暫無紀錄
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+
+<button onclick="location.href='index.html'">
+
+🏁 返回 Dashboard
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+let records =
+
+JSON.parse(
+
+localStorage.getItem("workRecords")
+
+)
+
+||
+
+[];
+
+
+
+let money = 0;
+
+let hours = 0;
+
+let overtime = 0;
+
+
+
+records.forEach(r=>{
+
+
+money += r.money;
+
+
+hours += r.hours;
+
+
+overtime += r.overtime;
+
+
+});
+
+
+
+document
+.getElementById("totalMoney")
+.innerText =
+
+"HK$"
++
+money.toFixed(2);
+
+
+
+document
+.getElementById("totalHours")
+.innerText =
+
+hours.toFixed(2)
++
+" 小時";
+
+
+
+document
+.getElementById("totalSessions")
+.innerText =
+
+records.length
++
+" 次";
+
+
+
+document
+.getElementById("totalOvertime")
+.innerText =
+
+overtime.toFixed(1)
++
+" 小時";
+
+
+
+
+let list =
+document.getElementById("records");
+
+
+
+if(records.length > 0){
+
+
+list.innerHTML="";
+
+
+records
+.slice()
+.reverse()
+.forEach(r=>{
+
+
+list.innerHTML += `
+
+<p>
+
+📅 ${r.date}
+
+<br>
+
+🏎️ ${r.hours} 小時
+
+<br>
+
+💰 HK$${r.money}
+
+<br>
+
+🔥 加班 ${r.overtime} 小時
+
+</p>
+
+<hr>
+
+`;
+
+
+});
+
+
+}
+
+
+
+</script>
+
+
+
+</body>
+
+</html>
