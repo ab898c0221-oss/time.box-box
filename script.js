@@ -24,6 +24,16 @@ let todayEarned = 0;
 let timer = null;
 let lunchMode = false;
 let startTime = null;
+// 📋 Work Records
+
+let workRecords =
+JSON.parse(
+localStorage.getItem("workRecords")
+)
+||
+[];
+
+let workStartTime = null;
 let sessionSeconds = 0;
 
 
@@ -274,7 +284,8 @@ return;
 
 startTime =
 Date.now();
-
+workStartTime =
+new Date();
 
 
 document.getElementById(
@@ -339,7 +350,97 @@ sessionSeconds
 
 
 totalFund += todayEarned;
+let workEndTime =
+new Date();
 
+
+let hours =
+(
+workEndTime
+-
+workStartTime
+)
+/
+1000
+/
+60
+/
+60;
+
+
+
+let overtime = 0;
+
+
+// 預計放工時間
+
+let plannedEnd =
+localStorage.getItem("workEnd")
+||
+"20:00";
+
+
+let plannedHour =
+Number(
+plannedEnd.split(":")[0]
+);
+
+
+
+if(
+workEndTime.getHours()
+>
+plannedHour
+){
+
+overtime =
+workEndTime.getHours()
+-
+plannedHour;
+
+}
+
+
+
+workRecords.push({
+
+date:
+new Date()
+.toISOString()
+.split("T")[0],
+
+start:
+workStartTime
+.toLocaleTimeString(),
+
+end:
+workEndTime
+.toLocaleTimeString(),
+
+hours:
+Number(hours.toFixed(2)),
+
+overtime:
+
+overtime,
+
+money:
+
+Number(
+todayEarned.toFixed(2)
+)
+
+});
+
+
+
+localStorage.setItem(
+
+"workRecords",
+
+JSON.stringify(workRecords)
+
+);
 
 
 localStorage.setItem(
