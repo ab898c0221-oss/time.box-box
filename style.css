@@ -1,0 +1,237 @@
+/* BOX BOX v0.1
+   F1 inspired design
+*/
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            135deg,
+            #090909,
+            #181818
+        );
+
+    color: white;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        Arial,
+        sans-serif;
+
+}
+
+
+.app {
+
+    width: 100%;
+
+    max-width: 430px;
+
+    margin: auto;
+
+    padding: 25px 18px;
+
+}
+
+
+
+header {
+
+    text-align: center;
+
+    margin-bottom: 25px;
+
+}
+
+
+header h1 {
+
+    font-size: 36px;
+
+    margin-bottom: 5px;
+
+}
+
+
+header p {
+
+    color: #aaa;
+
+    letter-spacing: 2px;
+
+}
+
+
+
+/* 卡片 */
+
+.card {
+
+    background:
+        rgba(255,255,255,0.08);
+
+    backdrop-filter: blur(10px);
+
+    border-radius: 22px;
+
+    padding: 22px;
+
+    margin-bottom: 18px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.1);
+
+}
+
+
+
+.card h2 {
+
+    margin-top:0;
+
+    font-size:20px;
+
+}
+
+
+
+/* 金額 */
+
+.money {
+
+    font-size:42px;
+
+    font-weight:800;
+
+    color:#ff8700;
+
+    margin:15px 0;
+
+}
+
+
+
+/* 時間 */
+
+#time {
+
+    font-size:32px;
+
+    font-weight:bold;
+
+}
+
+
+
+/* 進度條 */
+
+.progressBox {
+
+    width:100%;
+
+    height:16px;
+
+    background:#333;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+}
+
+
+
+#progressBar {
+
+    height:100%;
+
+    width:0%;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #ff8700,
+            #ffb347
+        );
+
+    transition:
+        width 0.5s;
+
+}
+
+
+
+/* 狀態 */
+
+#status {
+
+    color:#aaa;
+
+    font-size:18px;
+
+}
+
+
+
+/* 按鈕 */
+
+button {
+
+    width:100%;
+
+    padding:16px;
+
+    margin-bottom:12px;
+
+    border:none;
+
+    border-radius:18px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+
+
+#startBtn {
+
+    background:#16a34a;
+
+    color:white;
+
+}
+
+
+
+#stopBtn {
+
+    background:#dc2626;
+
+    color:white;
+
+}
+
+
+
+button:active {
+
+    transform:scale(0.97);
+
+}
