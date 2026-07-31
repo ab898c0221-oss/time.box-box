@@ -150,7 +150,13 @@ header p {
     font-weight:bold;
 
 }
+#resetBtn {
 
+    background:#555;
+
+    color:white;
+
+}
 
 
 
