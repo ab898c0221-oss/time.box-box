@@ -229,3 +229,8 @@ background:#2563eb;
 color:white;
 
 }
+canvas {
+
+max-height:300px;
+
+}
