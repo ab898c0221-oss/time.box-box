@@ -378,7 +378,23 @@ document.getElementById(
 
 
 updateDisplay();
+document
+.getElementById("resetBtn")
+.onclick = function(){
 
+    localStorage.removeItem("boxboxFund");
+
+    totalFund = 0;
+
+    todayEarned = 0;
+
+
+    updateDisplay();
+
+
+    alert("🔄 BOX BOX Reset Complete");
+
+};
 
 };
 
