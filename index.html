@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BOX BOX</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <header>
+        <h1>🏎️ BOX BOX</h1>
+        <p>Earn. Save. Race.</p>
+    </header>
+
+
+    <section class="card">
+
+        <h2>🏁 今日收入</h2>
+
+        <div id="todayMoney" class="money">
+            HK$0.00
+        </div>
+
+        <p>
+            時薪：
+            <span id="hourRate">HK$70</span>
+        </p>
+
+        <p>
+            每分鐘：
+            <span id="minuteRate">
+                HK$1.17
+            </span>
+        </p>
+
+    </section>
+
+
+
+    <section class="card">
+
+        <h2>🏎️ F1 Dream Fund</h2>
+
+        <div id="totalFund" class="money">
+            HK$0.00
+        </div>
+
+
+        <div class="progressBox">
+
+            <div id="progressBar"></div>
+
+        </div>
+
+
+        <p id="progressText">
+            0% / HK$20,000
+        </p>
+
+
+    </section>
+
+
+
+    <section class="card">
+
+        <h2>⏱️ Session</h2>
+
+        <p id="time">
+            00:00:00
+        </p>
+
+        <p id="status">
+            ⚪ 未開始
+        </p>
+
+    </section>
+
+
+
+    <button id="startBtn">
+        🟢 BOX BOX 開始
+    </button>
+
+
+    <button id="stopBtn">
+        🏁 Chequered Flag 收工
+    </button>
+
+
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
