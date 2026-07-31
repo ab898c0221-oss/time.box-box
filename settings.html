@@ -22,7 +22,11 @@
 
 
 <header>
+<button onclick="location.href='settings.html'">
 
+⚙️ Settings
+
+</button>
 <h1>⚙️ Settings</h1>
 
 <p>Work Configuration</p>
@@ -77,7 +81,77 @@ Lunch 長度（分鐘）
 
 </button>
 
+<script>
 
+const workStart =
+document.getElementById("workStart");
+
+const lunchStart =
+document.getElementById("lunchStart");
+
+const lunchDuration =
+document.getElementById("lunchDuration");
+
+const workEnd =
+document.getElementById("workEnd");
+
+
+// 讀取設定
+
+workStart.value =
+localStorage.getItem("workStart") || "11:00";
+
+
+lunchStart.value =
+localStorage.getItem("lunchStart") || "13:00";
+
+
+lunchDuration.value =
+localStorage.getItem("lunchDuration") || "60";
+
+
+workEnd.value =
+localStorage.getItem("workEnd") || "20:00";
+
+
+
+
+// 保存
+
+document
+.getElementById("saveBtn")
+.onclick=function(){
+
+
+localStorage.setItem(
+"workStart",
+workStart.value
+);
+
+
+localStorage.setItem(
+"lunchStart",
+lunchStart.value
+);
+
+
+localStorage.setItem(
+"lunchDuration",
+lunchDuration.value
+);
+
+
+localStorage.setItem(
+"workEnd",
+workEnd.value
+);
+
+
+alert("⚙️ Settings Saved!");
+
+};
+
+</script>
 
 </div>
 
