@@ -197,3 +197,18 @@ button {
     color:white;
 
 }
+input {
+
+width:100%;
+
+padding:12px;
+
+margin:10px 0 20px;
+
+border-radius:12px;
+
+border:none;
+
+font-size:18px;
+
+}
