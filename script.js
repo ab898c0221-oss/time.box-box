@@ -403,3 +403,217 @@ document
 
 
 updateDisplay();
+// 🕒 工作時間偵測
+
+
+function checkSchedule(){
+
+
+let now = new Date();
+
+
+let current =
+now.getHours()*60
++
+now.getMinutes();
+
+
+
+let start =
+localStorage.getItem("workStart")
+|| "11:00";
+
+
+let lunch =
+localStorage.getItem("lunchStart")
+|| "13:00";
+
+
+let duration =
+Number(
+localStorage.getItem("lunchDuration")
+)
+|| 60;
+
+
+let end =
+localStorage.getItem("workEnd")
+|| "20:00";
+
+
+
+function convert(time){
+
+let parts =
+time.split(":");
+
+return Number(parts[0])*60
++
+Number(parts[1]);
+
+}
+
+
+
+let startMin =
+convert(start);
+
+
+let lunchMin =
+convert(lunch);
+
+
+let endMin =
+convert(end);
+
+
+
+let status =
+document.getElementById("status");
+
+
+let schedule =
+document.getElementById("scheduleStatus");
+
+
+
+if(current < startMin){
+
+
+status.innerText =
+"⚪ 未開始";
+
+
+schedule.innerText =
+"距離返工還有 "
++
+(startMin-current)
++
+" 分鐘";
+
+
+}
+
+
+else if(
+current >= startMin
+&&
+current < lunchMin-10
+){
+
+
+status.innerText =
+"🟢 Working";
+
+
+schedule.innerText =
+"努力賺取 F1 基金中";
+
+
+}
+
+
+
+else if(
+current >= lunchMin-10
+&&
+current < lunchMin
+){
+
+
+status.innerText =
+"🟡 Pit Stop Soon";
+
+
+schedule.innerText =
+"10分鐘內 Lunch";
+
+
+}
+
+
+
+else if(
+current >= lunchMin
+&&
+current < lunchMin+duration
+){
+
+
+status.innerText =
+"🍱 Lunch Time";
+
+
+schedule.innerText =
+"休息中，但收入繼續累積";
+
+
+}
+
+
+
+else if(
+current >= lunchMin+duration
+&&
+current < endMin-15
+){
+
+
+status.innerText =
+"🟢 Back on Track";
+
+
+schedule.innerText =
+"繼續推進";
+
+
+}
+
+
+
+else if(
+current >= endMin-15
+&&
+current < endMin
+){
+
+
+status.innerText =
+"🏁 Final Lap";
+
+
+schedule.innerText =
+"距離收工少於15分鐘";
+
+
+}
+
+
+
+else{
+
+
+status.innerText =
+"🏆 Finished";
+
+
+schedule.innerText =
+"今日 Session 完成";
+
+
+}
+
+
+
+}
+
+
+
+
+setInterval(
+checkSchedule,
+1000
+);
+
+
+checkSchedule();
