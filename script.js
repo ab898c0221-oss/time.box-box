@@ -22,6 +22,7 @@ JSON.parse(
 
 let todayEarned = 0;
 let timer = null;
+let lunchMode = false;
 let startTime = null;
 let sessionSeconds = 0;
 
@@ -617,3 +618,64 @@ checkSchedule,
 
 
 checkSchedule();
+// 🍱 Lunch Button
+
+
+document
+.getElementById("lunchBtn")
+.onclick=function(){
+
+
+if(!timer)
+return;
+
+
+lunchMode = true;
+
+
+document
+.getElementById("status")
+.innerText =
+"🍱 Lunch Time";
+
+
+document
+.getElementById("scheduleStatus")
+.innerText =
+"休息中，收入繼續累積";
+
+
+};
+
+
+
+
+
+// 🏎️ Return Button
+
+
+document
+.getElementById("resumeBtn")
+.onclick=function(){
+
+
+if(!timer)
+return;
+
+
+lunchMode = false;
+
+
+document
+.getElementById("status")
+.innerText =
+"🟢 Back on Track";
+
+
+document
+.getElementById("scheduleStatus")
+.innerText =
+"繼續推進 F1 基金";
+
+
+};
