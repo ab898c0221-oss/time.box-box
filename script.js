@@ -1,183 +1,302 @@
-// 🏎️ BOX BOX v0.1
+// 🏎️ BOX BOX v0.2
 // Earn. Save. Race.
 
 
-const hourlyRate = 70; 
+const hourlyRate = 70;
 const targetFund = 20000;
 
-
-// 每秒收入
 const perSecond = hourlyRate / 3600;
 
 
-// 讀取之前基金
 let totalFund =
-    Number(
-        localStorage.getItem("boxboxFund")
-    ) || 0;
+Number(localStorage.getItem("boxboxFund")) || 0;
+
+
+let records =
+JSON.parse(
+    localStorage.getItem("boxboxRecords")
+)
+|| [];
 
 
 
 let todayEarned = 0;
-
 let timer = null;
-
 let startTime = null;
+let sessionSeconds = 0;
 
 
 
-// 更新畫面
+function getDate(){
+
+    return new Date()
+    .toISOString()
+    .split("T")[0];
+
+}
+
+
+
 
 function updateDisplay(){
 
 
-    // 今日收入
+    let current =
+    totalFund + todayEarned;
+
 
     document.getElementById(
         "todayMoney"
     ).innerText =
-        "HK$" +
-        todayEarned.toFixed(2);
+    "HK$" + todayEarned.toFixed(2);
 
-
-
-    // 總基金
-
-    let current =
-        totalFund + todayEarned;
 
 
     document.getElementById(
         "totalFund"
     ).innerText =
-        "HK$" +
-        current.toFixed(2);
+    "HK$" + current.toFixed(2);
 
 
-
-    // 進度
 
     let percent =
-        Math.min(
-            current / targetFund * 100,
-            100
-        );
-
+    Math.min(
+        current / targetFund * 100,
+        100
+    );
 
 
     document.getElementById(
         "progressBar"
     ).style.width =
-        percent + "%";
+    percent + "%";
 
 
 
     document.getElementById(
         "progressText"
     ).innerText =
-        percent.toFixed(1)
-        +
-        "% / HK$20,000";
+    percent.toFixed(1)
+    +
+    "% / HK$20,000";
 
+
+
+    updateStats();
 
 }
 
 
 
-// 更新時間
+
+
+function updateStats(){
+
+
+let today =
+getDate();
+
+
+let todayMoney =
+0;
+
+let weekMoney =
+0;
+
+let monthMoney =
+0;
+
+let hours = 0;
+
+
+
+records.forEach(record=>{
+
+
+    if(record.date === today){
+
+        todayMoney += record.money;
+
+    }
+
+
+    let recordDate =
+    new Date(record.date);
+
+
+    let now =
+    new Date();
+
+
+
+    let diff =
+    (now-recordDate)
+    /
+    (1000*60*60*24);
+
+
+
+    if(diff <= 7){
+
+        weekMoney += record.money;
+
+    }
+
+
+
+    if(
+        recordDate.getMonth()
+        ===
+        now.getMonth()
+    ){
+
+        monthMoney += record.money;
+
+    }
+
+
+    hours += record.seconds / 3600;
+
+
+
+});
+
+
+
+document.getElementById(
+"todayStat"
+).innerText =
+"HK$"+todayMoney.toFixed(2);
+
+
+
+document.getElementById(
+"weekStat"
+).innerText =
+"HK$"+weekMoney.toFixed(2);
+
+
+
+document.getElementById(
+"monthStat"
+).innerText =
+"HK$"+monthMoney.toFixed(2);
+
+
+
+document.getElementById(
+"workHours"
+).innerText =
+hours.toFixed(1)
++
+" 小時";
+
+
+
+document.getElementById(
+"sessions"
+).innerText =
+records.length
++
+" 次";
+
+}
+
+
+
+
 
 function updateTime(){
 
 
-    if(!startTime)
-        return;
+if(!startTime)
+return;
 
 
 
-    let seconds =
-        Math.floor(
-            (Date.now()-startTime)
-            /
-            1000
-        );
-
-
-    let h =
-        Math.floor(
-            seconds / 3600
-        );
-
-
-    let m =
-        Math.floor(
-            (seconds % 3600)
-            /
-            60
-        );
-
-
-    let s =
-        seconds % 60;
+let seconds =
+Math.floor(
+(Date.now()-startTime)
+/1000
+);
 
 
 
-    document.getElementById(
-        "time"
-    ).innerText =
+sessionSeconds = seconds;
 
-        String(h).padStart(2,"0")
-        +
-        ":"
-        +
-        String(m).padStart(2,"0")
-        +
-        ":"
-        +
-        String(s).padStart(2,"0");
 
+
+let h =
+Math.floor(seconds/3600);
+
+
+let m =
+Math.floor(
+(seconds%3600)/60
+);
+
+
+let s =
+seconds%60;
+
+
+
+document.getElementById(
+"time"
+).innerText =
+
+String(h).padStart(2,"0")
++
+":"
++
+String(m).padStart(2,"0")
++
+":"
++
+String(s).padStart(2,"0");
 
 }
 
 
 
-// 開始工作
+
 
 document
 .getElementById("startBtn")
-.onclick = function(){
+.onclick=function(){
 
 
-    if(timer)
-        return;
-
-
-
-    startTime =
-        Date.now();
+if(timer)
+return;
 
 
 
-    document.getElementById(
-        "status"
-    ).innerText =
-        "🟢 Working";
-
-
-    timer =
-        setInterval(()=>{
-
-
-            todayEarned += perSecond;
-
-
-            updateDisplay();
-
-            updateTime();
+startTime =
+Date.now();
 
 
 
-        },1000);
+document.getElementById(
+"status"
+).innerText =
+"🟢 Working";
 
+
+
+timer =
+setInterval(()=>{
+
+
+todayEarned += perSecond;
+
+
+updateDisplay();
+
+updateTime();
+
+
+
+},1000);
 
 
 };
@@ -185,60 +304,80 @@ document
 
 
 
-// 收工
+
 
 document
 .getElementById("stopBtn")
-.onclick = function(){
+.onclick=function(){
 
 
-    if(!timer)
-        return;
-
-
-
-    clearInterval(timer);
-
-
-    timer = null;
+if(!timer)
+return;
 
 
 
-    totalFund += todayEarned;
+clearInterval(timer);
+
+timer=null;
 
 
 
-    localStorage.setItem(
-        "boxboxFund",
-        totalFund
-    );
+records.push({
+
+date:getDate(),
+
+money:
+todayEarned,
+
+seconds:
+sessionSeconds
+
+
+});
 
 
 
-    todayEarned = 0;
+totalFund += todayEarned;
 
 
 
-    document.getElementById(
-        "status"
-    ).innerText =
-        "🏁 Chequered Flag";
+localStorage.setItem(
+"boxboxFund",
+totalFund
+);
 
 
 
-    startTime = null;
+localStorage.setItem(
+"boxboxRecords",
+JSON.stringify(records)
+);
 
 
 
-    updateDisplay();
+todayEarned=0;
+
+sessionSeconds=0;
+
+startTime=null;
 
 
 
-    document.getElementById(
-        "time"
-    ).innerText =
-        "00:00:00";
+document.getElementById(
+"status"
+).innerText =
+"🏁 Chequered Flag";
 
+
+
+document.getElementById(
+"time"
+).innerText =
+"00:00:00";
+
+
+
+updateDisplay();
 
 
 };
@@ -246,7 +385,5 @@ document
 
 
 
-
-// 初始載入
 
 updateDisplay();
