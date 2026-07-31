@@ -11,7 +11,7 @@
 <title>BOX BOX Statistics</title>
 
 <link rel="stylesheet" href="style.css">
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 
@@ -86,7 +86,13 @@ HK$0
 </div>
 
 
+<div class="card">
 
+<h2>📊 Weekly Earnings</h2>
+
+<canvas id="weeklyChart"></canvas>
+
+</div>
 <div class="card">
 
 <h2>📅 Recent Races</h2>
@@ -251,7 +257,115 @@ list.innerHTML += `
 
 </script>
 
+// 📊 Weekly Chart
 
+
+let weekMoney = {
+
+Mon:0,
+
+Tue:0,
+
+Wed:0,
+
+Thu:0,
+
+Fri:0,
+
+Sat:0,
+
+Sun:0
+
+};
+
+
+
+records.forEach(r=>{
+
+
+let day =
+new Date(r.date)
+.toLocaleDateString(
+"en-US",
+{
+weekday:"short"
+}
+);
+
+
+if(weekMoney[day] !== undefined){
+
+weekMoney[day]
++= r.money;
+
+}
+
+
+});
+
+
+
+new Chart(
+
+document
+.getElementById(
+"weeklyChart"
+),
+
+{
+
+type:"bar",
+
+data:{
+
+
+labels:
+Object.keys(weekMoney),
+
+
+datasets:[{
+
+label:
+"HKD Earned",
+
+
+data:
+Object.values(weekMoney)
+
+
+}]
+
+
+},
+
+
+options:{
+
+
+responsive:true,
+
+
+scales:{
+
+
+y:{
+
+
+beginAtZero:true
+
+
+}
+
+
+}
+
+
+}
+
+
+}
+
+);
 
 </body>
 
