@@ -23,6 +23,38 @@ JSON.parse(
 let todayEarned = 0;
 let timer = null;
 let lunchMode = false;
+let bonusMode = false;
+let bonusStart = null;
+document
+.getElementById("bonusBtn")
+.onclick=function(){
+
+
+if(!timer)
+return;
+
+
+bonusMode = true;
+
+
+bonusStart =
+new Date();
+
+
+
+document
+.getElementById("status")
+.innerText =
+"🔥 飛馳圈 Bonus";
+
+
+document
+.getElementById("scheduleStatus")
+.innerText =
+"Extra Push Mode";
+
+
+};
 let startTime = null;
 // 📋 Work Records
 
@@ -352,7 +384,34 @@ sessionSeconds
 totalFund += todayEarned;
 let workEndTime =
 new Date();
+let bonusHours = 0;
 
+
+if(bonusStart){
+
+
+bonusHours =
+
+(
+workEndTime
+-
+bonusStart
+)
+
+/
+
+1000
+
+/
+
+60
+
+/
+
+60;
+
+
+}
 
 let hours =
 (
@@ -423,7 +482,11 @@ Number(hours.toFixed(2)),
 overtime:
 
 overtime,
+bonus:
 
+Number(
+bonusHours.toFixed(2)
+),，
 money:
 
 Number(
@@ -647,7 +710,7 @@ status.innerText =
 
 
 schedule.innerText =
-"休息中，但收入繼續累積";
+"休息中，但仲有錢收！";
 
 
 }
